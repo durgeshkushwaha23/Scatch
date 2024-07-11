@@ -32,4 +32,4 @@ router.get("/admin",function(req,res){
 
 
 
-module.exports = router
+module.exports = router;
