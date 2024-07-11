@@ -43,4 +43,37 @@ module.exports.registeruser = async function(req, res) {
         res.status(500).send({ error: "Internal server error." });
       }
     }
+  };
+
+  module.exports.loginUser = async function(req,res){
+     let { email, password } = req.body;
+
+  try {
+    let user = await userModel.findOne({ email: email });
+    if (!user) {
+      return res.send("Email or password incorrect");
+      
+    }
+
+    bcrypt.compare(password, user.password, function(err, result) {
+      if (err) {
+        return res.send("An error occurred while comparing passwords");
+      }
+      if (result) {
+        let token = genratetoken(user);
+        res.cookie("token", token);
+        res.redirect("/shop");
+      } else {
+        res.send("Email or password incorrect");
+      }
+    });
+  } catch (error) {
+    res.send("An error occurred while logging in");
   }
+  };
+
+module.exports.logout = async function(req,res){
+  res.cookie("token","");
+  res.redirect("/");
+}  
+  
