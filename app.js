@@ -18,7 +18,7 @@ const indexRouter = require("./routes/index");
 require('dotenv').config();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
+// app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
 
@@ -29,6 +29,8 @@ app.use(expressSession({
   secret:process.env.EXPRESS_SESSION_SECRET,
 })
 );
+
+
 app.use(cookieParser());
 app.use(flash());
 
@@ -41,3 +43,5 @@ app.use("/",indexRouter)
 app.listen(3000, () => {
   console.log("Server is running on port log 3000");
 });
+
+

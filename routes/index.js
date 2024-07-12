@@ -8,7 +8,7 @@ router.get("/", (req, res) => {
   res.render("index", { error: req.flash("error") });
 });
 
-router.get("/shop", isLoggedIn, async (req, res) => {
+router.get("/shop", async (req, res) => {
   const products = await productModel.find();
   res.render("shop", { products });
 });
